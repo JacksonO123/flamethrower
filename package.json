@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "dev": "vite --port 8080"
+  },
+  "dependencies": {
+    "simulationjs": "^3.7.9",
+    "vite": "^4.3.4"
+  }
+}
