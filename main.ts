@@ -99,7 +99,7 @@ addEventListener('keyup', (e: KeyboardEvent) => {
   f && f();
 });
 
-const speed = 2;
+const speed = 4;
 frameLoop(() => {
   const numOfFlames = 3;
   if (shooting) for (let i = 0; i < numOfFlames; i++) flames.push(generateFlame(start, mousePos));
