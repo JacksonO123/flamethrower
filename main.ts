@@ -1,4 +1,4 @@
-import { frameLoop, radToDeg, randomColor } from 'simulationjs';
+import { frameLoop, radToDeg } from 'simulationjs';
 import { randInt } from 'simulationjs';
 import { Simulation, Color, Vector, Circle, Line } from 'simulationjs';
 
@@ -11,6 +11,7 @@ class Flame extends Circle {
   rotation: number;
   color: Color;
   speed: number;
+  speedDec: number;
   lifetime = 3; // s
   constructor(pos: Vector, rotation: number) {
     const maxRadius = 30;
@@ -19,12 +20,14 @@ class Flame extends Circle {
     this.rotation = this.offsetRotation(rotation);
     this.color = this.generateColor();
     this.speed = this.generateSpeed();
+    const decScale = 5;
     this.fill(bgColor.clone(), this.lifetime);
+    this.speedDec = (this.speed / (this.lifetime * 1000)) * decScale;
     this.setRadius(0, this.lifetime);
   }
   generateSpeed() {
-    const maxSpeed = 10;
-    const minSpeed = 4;
+    const maxSpeed = 14;
+    const minSpeed = 8;
     return Math.random() * (maxSpeed - minSpeed) + minSpeed;
   }
   generateColor() {
@@ -35,12 +38,13 @@ class Flame extends Circle {
     return new Color(one, two, three);
   }
   offsetRotation(rotation: number) {
-    const max = 40;
+    const max = 35;
     const amount = randInt(max / 2, -max / 2);
     return rotation + amount;
   }
   step() {
     const vec = new Vector(1, 0).rotate(this.rotation).multiply(this.speed);
+    this.speed = Math.max(0, this.speed - this.speedDec);
     this.move(vec);
   }
 }
